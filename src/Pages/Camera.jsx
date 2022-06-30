@@ -23,7 +23,7 @@ const Camera = () => {
 
   useEffect(() => {
     const newConnection = new HubConnectionBuilder()
-      .withUrl('http://localhost:5000/hub/upload')
+      .withUrl('http://localhost:5001/hub/upload')
       .withAutomaticReconnect()
       .build();
 
