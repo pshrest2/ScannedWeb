@@ -10,12 +10,9 @@ const Camera = () => {
     setImage(e.target.value);
   };
   const handleUploadImage = async () => {
-    const imageMessage = {
-      message: image,
-    };
     if (connection._connectionStarted) {
       try {
-        await connection.send('UploadImage', imageMessage);
+        await connection.send('UploadImage', image);
       } catch (e) {
         console.log(e);
       }
@@ -26,7 +23,7 @@ const Camera = () => {
 
   useEffect(() => {
     const newConnection = new HubConnectionBuilder()
-      .withUrl('http://localhost:5000/hubs/upload')
+      .withUrl('http://localhost:5000/hub/upload')
       .withAutomaticReconnect()
       .build();
 
