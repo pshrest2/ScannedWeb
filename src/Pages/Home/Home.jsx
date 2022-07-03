@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Spinner } from 'react-bootstrap';
 import { DragDropContext } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 import { useSelector, useDispatch } from 'react-redux';
-import Column from '../Components/Common/Column';
-import useApiAccess from '../Hooks/Api/useApiAccess';
-import { initialize, updateColumn, clear } from '../Actions/receipt';
-import ConfigureColumnModal from '../Components/Modals/ConfigureColumnModal/ConfigureColumnModal';
+import Column from '../../Components/Common/Column';
+import useApiAccess from '../../Hooks/Api/useApiAccess';
+import { initialize, updateColumn, clear } from '../../Actions/receipt';
+import { HubConnectionBuilder } from '@microsoft/signalr';
+import getBaseUrl from '../../Helpers/getBaseUrl';
+import ConfigureColumnModal from '../../Components/Modals/ConfigureColumnModal/ConfigureColumnModal';
+import './Home.scss';
 
 const Container = styled.div`
   display: flex;
@@ -20,6 +23,8 @@ const Home = () => {
 
   const [loadingItems, setLoadingItems] = useState(false);
   const [imageData, setImageData] = useState({});
+  const [showImage, setShowImage] = useState(false);
+  const [connection, setConnection] = useState(null);
   const [showConfigureColumnModal, setShowConfigureColumnModal] =
     useState(false);
 
@@ -46,6 +51,7 @@ const Home = () => {
     };
     dispatch(initialize(receiptInfo, columnsInfo));
     setLoadingItems(false);
+    setShowImage(false);
   };
   const handleOnDragEnd = (result) => {
     const { destination, source, draggableId } = result;
@@ -118,18 +124,56 @@ const Home = () => {
       };
       reader.readAsDataURL(imageFile);
     }
+    setShowImage(true);
   };
 
+  useEffect(() => {
+    const newConnection = new HubConnectionBuilder()
+      .withUrl(`${getBaseUrl()}/hub/upload`)
+      .withAutomaticReconnect()
+      .build();
+    setConnection(newConnection);
+  }, []);
+
+  useEffect(() => {
+    if (connection) {
+      connection
+        .start()
+        .then(() => {
+          console.log('Connected to the backend!');
+          connection.on('ReceiveImage', (uri) => {
+            setImageData({
+              ...imageData,
+              imageSrc: uri,
+            });
+            setShowImage(true);
+          });
+        })
+        .catch((error) => console.log('Connection failed: ', error));
+    }
+  }, [connection]);
   return (
-    <>
-      <form
-        encType="multipart/form-data"
-        onSubmit={handleFormSubmit}
-        method="post"
-      >
-        <input type="file" accept="image/*" onChange={handleImageUpload} />
-        <Button type="submit">Upload</Button>
-      </form>
+    <div className="home-container">
+      {showImage && (
+        <div className="image-container">
+          <img alt="receipt" id="receipt-image" src={imageData.imageSrc} />
+        </div>
+      )}
+      <div className="upload-form-container">
+        <form
+          encType="multipart/form-data"
+          onSubmit={handleFormSubmit}
+          method="post"
+        >
+          <div className="input-container">
+            <input type="file" accept="image/*" onChange={handleImageUpload} />
+          </div>
+          <div className="button-container">
+            <Button type="submit">Upload</Button>
+          </div>
+        </form>
+      </div>
+
       {hasData && (
         <>
           <Button onClick={() => dispatch(clear())}>Clear Receipt</Button>
@@ -166,7 +210,7 @@ const Home = () => {
           setShowConfigureColumnModal={setShowConfigureColumnModal}
         />
       )}
-    </>
+    </div>
   );
 };
 
