@@ -1,14 +1,13 @@
 import axios from 'axios';
+import getBaseUrl from '../../Helpers/getBaseUrl';
 
 const useApiAccess = () => {
-  const baseURL = 'https://localhost:8081/api';
-
   const fetchReceiptData = async (imageData) => {
     const formData = new FormData();
     formData.append('file', imageData);
 
     const response = await axios.post(
-      `${baseURL}/FormRecognizer/Upload`,
+      `${getBaseUrl()}/api/FormRecognizer/Upload`,
       formData,
       {
         headers: {

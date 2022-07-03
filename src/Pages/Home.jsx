@@ -122,11 +122,6 @@ const Home = () => {
 
   return (
     <>
-      <img
-        src="https://receiptimages.blob.core.windows.net/receipt-images/IMG_8972.JPG?sp=r&st=2022-06-30T04:19:24Z&se=2022-06-30T12:19:24Z&spr=https&sv=2021-06-08&sr=b&sig=uvLZ36GoSdE%2Fd6Y3xtoD1%2B7%2BX9J6ejN4ON3Vsjj7Dmo%3D"
-        height={50}
-        width={50}
-      />
       <form
         encType="multipart/form-data"
         onSubmit={handleFormSubmit}

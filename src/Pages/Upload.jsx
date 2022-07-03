@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { HubConnectionBuilder } from '@microsoft/signalr';
+import getBaseUrl from '../Helpers/getBaseUrl';
 
 const Upload = () => {
   const [connection, setConnection] = useState(null);
@@ -7,7 +8,7 @@ const Upload = () => {
 
   useEffect(() => {
     const newConnection = new HubConnectionBuilder()
-      .withUrl('http://localhost:5001/hub/upload')
+      .withUrl(`${getBaseUrl()}/hub/upload`)
       .withAutomaticReconnect()
       .build();
     setConnection(newConnection);
