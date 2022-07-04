@@ -28,7 +28,6 @@ const Home = () => {
   const [showConfigureColumnModal, setShowConfigureColumnModal] =
     useState(false);
   const [hasUrl, setHasUrl] = useState(false);
-
   const { fetchReceiptData, fetchReceiptDataUrl } = useApiAccess();
 
   const hasData = receiptData.items.length > 0;
