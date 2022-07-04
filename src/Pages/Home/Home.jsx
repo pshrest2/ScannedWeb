@@ -27,16 +27,18 @@ const Home = () => {
   const [connection, setConnection] = useState(null);
   const [showConfigureColumnModal, setShowConfigureColumnModal] =
     useState(false);
+  const [hasUrl, setHasUrl] = useState(false);
 
-  const { fetchReceiptData } = useApiAccess();
+  const { fetchReceiptData, fetchReceiptDataUrl } = useApiAccess();
 
   const hasData = receiptData.items.length > 0;
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     setLoadingItems(true);
-    const receiptInfo = await fetchReceiptData(imageData.imageFile);
-    // const receiptInfo = receiptInfoMock;
+    const receiptInfo = hasUrl
+      ? await fetchReceiptDataUrl(imageData.imageSrc)
+      : await fetchReceiptData(imageData.imageFile);
     const initialColumnId = uuidv4();
     const columnsInfo = {
       columns: {
@@ -147,6 +149,7 @@ const Home = () => {
               imageSrc: uri,
             });
             setShowImage(true);
+            setHasUrl(true);
           });
         })
         .catch((error) => console.log('Connection failed: ', error));
