@@ -12,6 +12,8 @@ import getBaseUrl from '../../Helpers/getBaseUrl';
 import { BsSearch, BsUpload } from 'react-icons/bs';
 import ConfigureColumnModal from '../../Components/Modals/ConfigureColumnModal/ConfigureColumnModal';
 import './Home.scss';
+import UploadImageModal from '../../Components/Modals/UploadImageModal/UploadImageModal';
+import CustomButton from '../../Components/Common/CustomerButton';
 
 const Container = styled.div`
   display: flex;
@@ -29,6 +31,8 @@ const Home = () => {
   const [showConfigureColumnModal, setShowConfigureColumnModal] =
     useState(false);
   const [hasUrl, setHasUrl] = useState(false);
+  const [showUploadImageModal, setShowUploadImageModal] = useState(false);
+
   const { fetchReceiptData, fetchReceiptDataUrl } = useApiAccess();
 
   const hasData = receiptData.items.length > 0;
@@ -161,23 +165,21 @@ const Home = () => {
         live for the <span className="title-focus">now</span>, split the bill{' '}
         <span className="title-focus">later</span>
       </div>
-
       <div className="buttons-container">
-        <Button>
+        <CustomButton onClick={() => setShowUploadImageModal(true)} shadow>
           browse for receipt <BsSearch className="button-icon" />
-        </Button>
-
+        </CustomButton>
         <span>or</span>
-        <Button>
+        <CustomButton shadow>
           upload from phone <BsUpload className="button-icon" />{' '}
-        </Button>
+        </CustomButton>
       </div>
       {showImage && (
         <div className="image-container">
           <img alt="receipt" id="receipt-image" src={imageData.imageSrc} />
         </div>
       )}
-      <div className="upload-form-container">
+      {/* <div className="upload-form-container">
         <form
           encType="multipart/form-data"
           onSubmit={handleFormSubmit}
@@ -190,7 +192,7 @@ const Home = () => {
             <Button type="submit">Upload</Button>
           </div>
         </form>
-      </div>
+      </div> */}
 
       {hasData && (
         <>
@@ -226,6 +228,13 @@ const Home = () => {
         <ConfigureColumnModal
           showConfigureColumnModal={showConfigureColumnModal}
           setShowConfigureColumnModal={setShowConfigureColumnModal}
+        />
+      )}
+
+      {showUploadImageModal && (
+        <UploadImageModal
+          show={showUploadImageModal}
+          handleClose={() => setShowUploadImageModal(false)}
         />
       )}
     </div>
