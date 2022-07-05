@@ -1,4 +1,47 @@
 .home-container {
+  background-image: url('../../../public/images/background.png');
+  background-position: center center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: #464646;
+  height: 100vh;
+  overflow: auto;
+
+  .title-container {
+    font-size: 64px;
+    margin-top: 130px;
+    text-align: center;
+
+    .title-focus {
+      color: #eb7509;
+    }
+  }
+
+  .buttons-container {
+    text-align: center;
+    margin-top: 110px;
+    justify-content: space-between;
+    button {
+      margin: 0px 15px;
+      background-color: #e2ba6b;
+      border: none;
+      color: #000;
+      padding: 11px;
+      border-radius: 12px;
+      box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+      .button-icon {
+        margin-left: 3px;
+      }
+    }
+    button:hover {
+      background-color: #ffb775;
+    }
+
+    span {
+      font-size: 20px;
+    }
+  }
   .image-container {
     width: 500px;
     height: 500px;

@@ -9,6 +9,7 @@ import useApiAccess from '../../Hooks/Api/useApiAccess';
 import { initialize, updateColumn, clear } from '../../Actions/receipt';
 import { HubConnectionBuilder } from '@microsoft/signalr';
 import getBaseUrl from '../../Helpers/getBaseUrl';
+import { BsSearch, BsUpload } from 'react-icons/bs';
 import ConfigureColumnModal from '../../Components/Modals/ConfigureColumnModal/ConfigureColumnModal';
 import './Home.scss';
 
@@ -156,6 +157,21 @@ const Home = () => {
   }, [connection]);
   return (
     <div className="home-container">
+      <div className="title-container">
+        live for the <span className="title-focus">now</span>, split the bill{' '}
+        <span className="title-focus">later</span>
+      </div>
+
+      <div className="buttons-container">
+        <Button>
+          browse for receipt <BsSearch className="button-icon" />
+        </Button>
+
+        <span>or</span>
+        <Button>
+          upload from phone <BsUpload className="button-icon" />{' '}
+        </Button>
+      </div>
       {showImage && (
         <div className="image-container">
           <img alt="receipt" id="receipt-image" src={imageData.imageSrc} />
