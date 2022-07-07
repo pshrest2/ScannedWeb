@@ -1,9 +1,13 @@
-/* eslint-disable default-param-last */
 const initialState = {
   receiptData: {
     items: [],
   },
   columnsData: {},
+  imageData: {
+    imageFile: null,
+    imageSrc: null,
+    fromUrl: false,
+  },
 };
 
 const receipt = (state = initialState, { type, payload }) => {
@@ -33,12 +37,36 @@ const receipt = (state = initialState, { type, payload }) => {
           },
         },
       };
-    case 'CLEAR':
+    case 'UPDATE':
       return {
-        receiptData: {
-          items: [],
+        ...state,
+        [payload.key]: payload.value,
+      };
+    case 'UPDATE_IMAGE_URI':
+      return {
+        ...state,
+        imageData: {
+          ...state.imageData,
+          imageSrc: payload.uri,
+          fromUrl: true,
         },
-        columnsData: {},
+      };
+    case 'UPDATE_IMAGE_DATA':
+      return {
+        ...state,
+        imageData: {
+          ...state.imageData,
+          imageSrc: payload.imageSrc,
+          imageFile: payload.imageFile,
+          fromUrl: payload.fromUrl,
+        },
+      };
+    case 'CLEAR':
+      return initialState;
+    case 'CLEAR_IMAGE':
+      return {
+        ...state,
+        imageData: initialState.imageData,
       };
     default:
       return state;

@@ -3,6 +3,7 @@ import useAxios from '../useAxios';
 const useApiAccess = () => {
   const { postForm, post } = useAxios();
   const fetchReceiptData = async (imageData) => {
+    console.log('test');
     const formData = new FormData();
     formData.append('file', imageData);
 
