@@ -17,7 +17,6 @@ const Home = () => {
   const hiddenFileInput = useRef(null);
   const { configureColumnModal, uploadImageModal } = modal;
   const [connection, setConnection] = useState(null);
-  console.log(uploadImageModal);
   const handleCloseUploadImageModal = () => {
     dispatch(display(Modals.UploadImageModal), false);
     dispatch(clearImage());
@@ -40,7 +39,7 @@ const Home = () => {
           console.log('Connected to the backend!');
           connection.on('ReceiveImage', (uri) => {
             dispatch(updateImageUri(uri));
-            dispatch(display(Modals.UploadImageModal), true);
+            dispatch(display(Modals.UploadImageModal, true));
           });
         })
         .catch((error) => console.log('Connection failed: ', error));
