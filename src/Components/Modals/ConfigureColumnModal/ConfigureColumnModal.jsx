@@ -5,10 +5,7 @@ import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import { updateColumn } from '../../../Actions/receipt';
 
-const ConfigureColumnModal = ({
-  showConfigureColumnModal,
-  setShowConfigureColumnModal,
-}) => {
+const ConfigureColumnModal = ({ show, handleClose }) => {
   const data = useSelector((state) => state.receipt);
   const { columnsData } = data;
   const dispatch = useDispatch();
@@ -19,7 +16,7 @@ const ConfigureColumnModal = ({
   });
 
   const handleCreateColumn = () => {
-    setShowConfigureColumnModal(false);
+    handleClose();
     const id = uuidv4();
     const newColumnsData = {
       ...columnsData,
@@ -45,11 +42,7 @@ const ConfigureColumnModal = ({
   };
 
   return (
-    <Modal
-      show={showConfigureColumnModal}
-      onHide={() => setShowConfigureColumnModal(false)}
-      backdrop="static"
-    >
+    <Modal show={show} onHide={handleClose} backdrop="static">
       <Modal.Header closeButton>
         <Modal.Title>Configure Column</Modal.Title>
       </Modal.Header>
@@ -83,10 +76,7 @@ const ConfigureColumnModal = ({
       </Modal.Body>
 
       <Modal.Footer>
-        <Button
-          variant="secondary"
-          onClick={() => setShowConfigureColumnModal(false)}
-        >
+        <Button variant="secondary" onClick={handleClose}>
           Cancel
         </Button>
         <Button variant="primary" onClick={handleCreateColumn}>
@@ -100,6 +90,6 @@ const ConfigureColumnModal = ({
 export default ConfigureColumnModal;
 
 ConfigureColumnModal.propTypes = {
-  showConfigureColumnModal: PropTypes.bool.isRequired,
-  setShowConfigureColumnModal: PropTypes.func.isRequired,
+  show: PropTypes.bool.isRequired,
+  handleClose: PropTypes.func.isRequired,
 };
