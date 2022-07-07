@@ -1,14 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { clear, updateColumn } from '../../Actions/receipt';
+import { Button } from 'react-bootstrap';
+import { DragDropContext } from 'react-beautiful-dnd';
+import Column from '../Common/Column';
+import { display } from '../../Actions/modal';
+import { Modals } from '../../Enums/Modals';
+
 const Container = styled.div`
   display: flex;
 `;
 
 const SplitReceipt = () => {
+  const dispatch = useDispatch();
   const data = useSelector((state) => state.receipt);
-
+  const { receiptData, columnsData } = data;
   const hasData = receiptData.items.length > 0;
   const handleOnDragEnd = (result) => {
     const { destination, source, draggableId } = result;
@@ -69,30 +76,26 @@ const SplitReceipt = () => {
   };
   return (
     <div className="split-container">
-      {hasData && (
-        <>
-          <Button onClick={() => dispatch(clear())}>Clear Receipt</Button>
-          <Button onClick={() => setShowConfigureColumnModal(true)}>
-            Add Column
-          </Button>
-        </>
-      )}
+      <Button onClick={() => dispatch(clear())}>Clear Receipt</Button>
+      <Button
+        onClick={() => dispatch(display(Modals.ConfigureColumnModal, true))}
+      >
+        Add Column
+      </Button>
       <div className="row">
-        {hasData && (
-          <DragDropContext onDragEnd={handleOnDragEnd}>
-            <Container>
-              {columnsData.columnOrder.map((columnId) => {
-                const column = columnsData.columns[columnId];
-                const items = [];
-                column.itemIds.forEach((itemId) => {
-                  const item = receiptData.items.find((i) => i.id === itemId);
-                  items.push(item);
-                });
-                return <Column key={column.id} column={column} items={items} />;
-              })}
-            </Container>
-          </DragDropContext>
-        )}
+        <DragDropContext onDragEnd={handleOnDragEnd}>
+          <Container>
+            {columnsData.columnOrder.map((columnId) => {
+              const column = columnsData.columns[columnId];
+              const items = [];
+              column.itemIds.forEach((itemId) => {
+                const item = receiptData.items.find((i) => i.id === itemId);
+                items.push(item);
+              });
+              return <Column key={column.id} column={column} items={items} />;
+            })}
+          </Container>
+        </DragDropContext>
       </div>
     </div>
   );

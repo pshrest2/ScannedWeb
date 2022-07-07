@@ -10,18 +10,23 @@ import BackgroundContainer from '../../Components/Common/BackgroundContainer';
 import Main from '../../Components/Main/Main';
 import { display } from '../../Actions/modal';
 import { Modals } from '../../Enums/Modals';
+import SplitReceipt from '../../Components/SplitReceipt/SplitReceipt';
 
 const Home = () => {
+  const data = useSelector((state) => state.receipt);
   const modal = useSelector((state) => state.modal);
   const dispatch = useDispatch();
   const hiddenFileInput = useRef(null);
   const { configureColumnModal, uploadImageModal } = modal;
+  const { receiptData } = data;
   const [connection, setConnection] = useState(null);
+
   const handleCloseUploadImageModal = () => {
     dispatch(display(Modals.UploadImageModal), false);
     dispatch(clearImage());
     hiddenFileInput.current.value = null;
   };
+  const hasData = receiptData.items.length > 0;
 
   useEffect(() => {
     const newConnection = new HubConnectionBuilder()
@@ -47,7 +52,7 @@ const Home = () => {
   }, [connection]);
   return (
     <BackgroundContainer className="home-container">
-      <Main hiddenFileInput={hiddenFileInput} />
+      {!hasData ? <Main hiddenFileInput={hiddenFileInput} /> : <SplitReceipt />}
 
       {configureColumnModal && (
         <ConfigureColumnModal
