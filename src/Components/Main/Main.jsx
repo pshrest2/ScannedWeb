@@ -1,6 +1,6 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { BsSearch, BsUpload } from 'react-icons/bs';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { display } from '../../Actions/modal';
 import { Modals } from '../../Enums/Modals';
 import CustomButton from '../Common/CustomButton';

@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import BackgroundContainer from '../Common/BackgroundContainer';
 import { useSelector } from 'react-redux';
 const Container = styled.div`
   display: flex;
@@ -69,7 +68,7 @@ const SplitReceipt = () => {
     }
   };
   return (
-    <BackgroundContainer className="split-container">
+    <div className="split-container">
       {hasData && (
         <>
           <Button onClick={() => dispatch(clear())}>Clear Receipt</Button>
@@ -95,7 +94,7 @@ const SplitReceipt = () => {
           </DragDropContext>
         )}
       </div>
-    </BackgroundContainer>
+    </div>
   );
 };
 
