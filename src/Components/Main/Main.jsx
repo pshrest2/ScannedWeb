@@ -42,9 +42,7 @@ const Main = ({ hiddenFileInput }) => {
         </CustomButton>
         <span>or</span>
         <CustomButton
-          onClick={() => {
-            console.log('upload from phone');
-          }}
+          onClick={() => dispatch(display(Modals.QRCodeModal, true))}
           shadow
         >
           upload from phone <BsUpload className="button-icon" />

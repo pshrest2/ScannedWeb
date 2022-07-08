@@ -44,6 +44,7 @@ const UploadImageModal = ({ show, handleClose }) => {
       show={show}
       onHide={handleClose}
     >
+      <Modal.Header closeButton></Modal.Header>
       <Modal.Body>
         <div className="image-preview-container">
           <img src={imageData.imageSrc} alt="test" />

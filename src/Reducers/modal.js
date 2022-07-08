@@ -1,6 +1,9 @@
+import { Modals } from '../Enums/Modals';
+
 const initialState = {
-  configureColumnModal: false,
-  uploadImageModal: false,
+  [Modals.ConfigureColumnModal]: false,
+  [Modals.UploadImageModal]: false,
+  [Modals.QRCodeModal]: false,
 };
 
 const modal = (state = initialState, { type, payload }) => {

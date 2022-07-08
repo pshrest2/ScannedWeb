@@ -11,13 +11,14 @@ import Main from '../../Components/Main/Main';
 import { display } from '../../Actions/modal';
 import { Modals } from '../../Enums/Modals';
 import SplitReceipt from '../../Components/SplitReceipt/SplitReceipt';
+import QRCodeModal from '../../Components/Modals/QRCodeModal/QRCodeModal';
 
 const Home = () => {
   const data = useSelector((state) => state.receipt);
   const modal = useSelector((state) => state.modal);
   const dispatch = useDispatch();
   const hiddenFileInput = useRef(null);
-  const { configureColumnModal, uploadImageModal } = modal;
+  const { configureColumnModal, uploadImageModal, qrCodeModal } = modal;
   const { receiptData } = data;
   const [connection, setConnection] = useState(null);
 
@@ -49,7 +50,7 @@ const Home = () => {
         })
         .catch((error) => console.log('Connection failed: ', error));
     }
-  }, [connection]);
+  }, [connection, dispatch]);
   return (
     <BackgroundContainer className="home-container">
       {!hasData ? <Main hiddenFileInput={hiddenFileInput} /> : <SplitReceipt />}
@@ -66,6 +67,12 @@ const Home = () => {
         <UploadImageModal
           show={uploadImageModal}
           handleClose={handleCloseUploadImageModal}
+        />
+      )}
+      {qrCodeModal && (
+        <QRCodeModal
+          show={qrCodeModal}
+          handleClose={() => dispatch(display(Modals.QRCodeModal), false)}
         />
       )}
     </BackgroundContainer>

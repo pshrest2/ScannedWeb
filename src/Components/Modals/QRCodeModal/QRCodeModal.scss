@@ -1,4 +1,4 @@
-.upload-image-modal {
+.qr-code-modal {
   .modal-header {
     border: none;
   }
@@ -8,17 +8,17 @@
     border: none;
   }
   .modal-body {
-    .image-preview-container {
+    .qr-code-preview-container {
       text-align: center;
-      img {
+      svg {
         max-width: 100%;
         max-height: 100%;
         border-radius: 15px;
       }
     }
   }
-
   .modal-footer {
     border: none;
+    margin: auto;
   }
 }
