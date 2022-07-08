@@ -5,14 +5,19 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Item from './Item';
 import { updateColumnTitle } from '../../Actions/receipt';
+import { FormControl, FormText } from 'react-bootstrap';
 
 const Container = styled.div`
   margin: 8px;
-  border: 1px solid lightgrey;
-  border-radius: 2px;
+  border-radius: 13px;
+  background-color: #f2effc;
+  padding: 15px;
+`;
+const InnerContainer = styled.div`
+  margin: 0px 5px;
 `;
 const ItemList = styled.div`
-  padding: 8px;
+  min-height: 100%;
 `;
 
 const Column = ({ column, items }) => {
@@ -27,12 +32,12 @@ const Column = ({ column, items }) => {
     items.forEach((item) => {
       total += item.price;
     });
-    return total;
+    return Math.round(total * 100) / 100;
   };
 
   return (
     <Container>
-      <input
+      <FormControl
         type="text"
         placeholder={"Enter column's title "}
         onChange={handleTitleChange}
@@ -45,10 +50,10 @@ const Column = ({ column, items }) => {
               <Item key={item.id} item={item} index={index} />
             ))}
             {provided.placeholder}
+            <InnerContainer>{`Total: $${getTotal()}`}</InnerContainer>
           </ItemList>
         )}
       </Droppable>
-      {`Total: $${getTotal()}`}
     </Container>
   );
 };

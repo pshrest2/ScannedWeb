@@ -5,11 +5,12 @@ import { Draggable } from 'react-beautiful-dnd';
 import PropTypes from 'prop-types';
 
 const Container = styled.div`
-  border: 1px solid lightgrey;
-  border-radius: 2px;
+  border-radius: 10px;
   padding: 8px;
-  margin-bottom: 8px;
+  margin: 8px 0px;
   background-color: white;
+  display: flex;
+  justify-content: space-between;
 `;
 
 function Item({ item, index }) {
@@ -21,7 +22,8 @@ function Item({ item, index }) {
           {...provided.dragHandleProps}
           ref={provided.innerRef}
         >
-          {item.name} : ${item.price}
+          <span>{item.name}</span>
+          <span>{item.price}</span>
         </Container>
       )}
     </Draggable>
