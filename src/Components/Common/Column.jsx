@@ -4,9 +4,10 @@ import { Droppable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Item from './Item';
-import { updateColumnTitle } from '../../Actions/receipt';
+import { updateColumn, updateColumnTitle } from '../../Actions/receipt';
 import { FormControl } from 'react-bootstrap';
 import { IoMdClose } from 'react-icons/io';
+import { useSelector } from 'react-redux';
 const Container = styled.div`
   margin: 8px;
   border-radius: 13px;
@@ -35,8 +36,9 @@ const Span = styled.span`
 `;
 
 const Column = ({ column, items }) => {
+  const data = useSelector((state) => state.receipt);
   const dispatch = useDispatch();
-
+  const { columnsData } = data;
   const handleTitleChange = (e) => {
     dispatch(updateColumnTitle(column.id, e.target.value));
   };
@@ -49,6 +51,18 @@ const Column = ({ column, items }) => {
     return Math.round(total * 100) / 100;
   };
 
+  const handleDeleteColumn = () => {
+    const columnsCopy = { ...columnsData.columns };
+    const columnOrderCopy = [...columnsData.columnOrder];
+    delete columnsCopy[column.id];
+
+    const newColumnsData = {
+      ...columnsData,
+      columns: columnsCopy,
+      columnOrder: columnOrderCopy.filter((x) => x !== column.id),
+    };
+    dispatch(updateColumn(newColumnsData));
+  };
   return (
     <Container>
       <Span onClick={handleDeleteColumn}>
