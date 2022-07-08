@@ -1,7 +1,7 @@
 name: Deploy React App to Azure Storage
 
 on:
-  pull_request:
+  push:
     branches:
       - 'release/*'
 defaults:
