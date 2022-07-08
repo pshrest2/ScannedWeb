@@ -5,19 +5,33 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Item from './Item';
 import { updateColumnTitle } from '../../Actions/receipt';
-import { FormControl, FormText } from 'react-bootstrap';
-
+import { FormControl } from 'react-bootstrap';
+import { IoMdClose } from 'react-icons/io';
 const Container = styled.div`
   margin: 8px;
   border-radius: 13px;
   background-color: #f2effc;
-  padding: 15px;
+  padding: 25px 15px;
+  position: relative;
 `;
 const InnerContainer = styled.div`
   margin: 0px 5px;
 `;
 const ItemList = styled.div`
   min-height: 100%;
+`;
+
+const Span = styled.span`
+  position: absolute;
+  top: 0px;
+  right: 10px;
+  transition: font-size 0.2s ease;
+  -webkit-transition: font-size 0.2s ease;
+  -moz-transition: font-size 0.2s ease;
+  -o-transition: font-size 0.2s ease;
+  &:hover {
+    font-size: 19px;
+  }
 `;
 
 const Column = ({ column, items }) => {
@@ -37,6 +51,10 @@ const Column = ({ column, items }) => {
 
   return (
     <Container>
+      <Span onClick={handleDeleteColumn}>
+        <IoMdClose />
+      </Span>
+
       <FormControl
         type="text"
         placeholder={"Enter column's title "}

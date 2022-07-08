@@ -79,7 +79,12 @@ const SplitReceipt = () => {
   return (
     <div className="split-container">
       <Row className="buttons-container">
-        <CustomButton onClick={() => dispatch(clear())} shadow>
+        <CustomButton
+          backgroundColor="#bbbbbb"
+          hoverBackgroundColor="#b1b1b1"
+          onClick={() => dispatch(clear())}
+          shadow
+        >
           Clear Receipt
         </CustomButton>
         <CustomButton
