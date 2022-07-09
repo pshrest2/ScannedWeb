@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import Item from './Item';
 import { updateColumn, updateColumnTitle } from '../../Actions/receipt';
 import { FormControl } from 'react-bootstrap';
-import { IoMdClose } from 'react-icons/io';
+import { AiFillCloseCircle } from 'react-icons/ai';
 import { useSelector } from 'react-redux';
 const Container = styled.div`
   margin: 8px;
@@ -31,7 +31,7 @@ const Span = styled.span`
   -moz-transition: font-size 0.2s ease;
   -o-transition: font-size 0.2s ease;
   &:hover {
-    font-size: 19px;
+    font-size: 17px;
   }
 `;
 
@@ -66,7 +66,7 @@ const Column = ({ column, items }) => {
   return (
     <Container>
       <Span onClick={handleDeleteColumn}>
-        <IoMdClose />
+        <AiFillCloseCircle />
       </Span>
 
       <FormControl

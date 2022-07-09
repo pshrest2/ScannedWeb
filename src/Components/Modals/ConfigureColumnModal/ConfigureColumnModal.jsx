@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Form, Modal } from 'react-bootstrap';
+import { Form, Modal } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import { updateColumn } from '../../../Actions/receipt';
+import CustomButton from '../../Common/CustomButton';
+import './ConfigureColumnModal.scss';
 
 const ConfigureColumnModal = ({ show, handleClose }) => {
   const data = useSelector((state) => state.receipt);
@@ -42,7 +44,12 @@ const ConfigureColumnModal = ({ show, handleClose }) => {
   };
 
   return (
-    <Modal show={show} onHide={handleClose} backdrop="static">
+    <Modal
+      className="configure-column-modal"
+      size="sm"
+      show={show}
+      onHide={handleClose}
+    >
       <Modal.Header closeButton>
         <Modal.Title>Configure Column</Modal.Title>
       </Modal.Header>
@@ -76,12 +83,10 @@ const ConfigureColumnModal = ({ show, handleClose }) => {
       </Modal.Body>
 
       <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
+        <CustomButton variant="secondary" onClick={handleClose}>
           Cancel
-        </Button>
-        <Button variant="primary" onClick={handleCreateColumn}>
-          Create Column
-        </Button>
+        </CustomButton>
+        <CustomButton onClick={handleCreateColumn}>Create Column</CustomButton>
       </Modal.Footer>
     </Modal>
   );

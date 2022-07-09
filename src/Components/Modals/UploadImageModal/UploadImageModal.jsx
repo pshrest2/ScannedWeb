@@ -52,11 +52,7 @@ const UploadImageModal = ({ show, handleClose }) => {
       </Modal.Body>
 
       <Modal.Footer>
-        <CustomButton
-          onClick={handleClose}
-          backgroundColor="#bbbbbb"
-          hoverBackgroundColor="#b1b1b1"
-        >
+        <CustomButton onClick={handleClose} variant="secondary">
           Go back
         </CustomButton>
         <CustomButton disabled={loadingItems} onClick={handleSubmit}>

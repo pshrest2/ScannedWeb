@@ -2,47 +2,50 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+const dict = {
+  primary: {
+    color: '#000',
+    backgroundColor: '#e2ba6b',
+    hoverColor: '#000',
+    hoverBackgroundColor: '#ffb775',
+  },
+  secondary: {
+    color: '#000',
+    backgroundColor: '#bbbbbb',
+    hoverColor: '#000',
+    hoverBackgroundColor: '#b1b1b1',
+  },
+};
+
 const StyledButton = styled.button`
-  background-color: ${(props) => props.backgroundColor};
+  background-color: ${(props) => dict[props.variant].backgroundColor};
   border: none;
-  color: ${(props) => props.color};
+  color: ${(props) => dict[props.variant].color};
   padding: 11px;
   border-radius: 12px;
   box-shadow: ${(props) =>
     props.shadow ? '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' : 'none'};
   &:hover {
-    color: ${(props) => props.hoverColor};
-    background-color: ${(props) => props.hoverBackgroundColor};
+    color: ${(props) => dict[props.variant].hoverColor};
+    background-color: ${(props) => dict[props.variant].hoverBackgroundColor};
   }
   &:disabled {
     cursor: not-allowed;
-    color: ${(props) => props.color};
-    background-color: ${(props) => props.backgroundColor};
+    color: ${(props) => dict[props.variant].color};
+    background-color: ${(props) => dict[props.variant].backgroundColor};
   }
 `;
 
 const CustomButton = (
-  {
-    children,
-    onClick,
-    color,
-    backgroundColor,
-    hoverBackgroundColor,
-    hoverColor,
-    shadow,
-    disabled,
-  },
+  { children, onClick, shadow, disabled, variant },
   props
 ) => {
   return (
     <StyledButton
       onClick={onClick}
-      color={color}
-      backgroundColor={backgroundColor}
-      hoverBackgroundColor={hoverBackgroundColor}
-      hoverColor={hoverColor}
       shadow={shadow}
       disabled={disabled}
+      variant={variant}
       {...props}
     >
       {children}
@@ -58,19 +61,13 @@ CustomButton.propTypes = {
     PropTypes.node,
   ]).isRequired,
   onClick: PropTypes.func.isRequired,
-  color: PropTypes.string,
-  backgroundColor: PropTypes.string,
-  hoverColor: PropTypes.string,
-  hoverBackgroundColor: PropTypes.string,
   shadow: PropTypes.bool,
   disabled: PropTypes.bool,
+  variant: PropTypes.string,
 };
 
 CustomButton.defaultProps = {
-  color: '#000',
-  backgroundColor: '#e2ba6b',
-  hoverBackgroundColor: '#ffb775',
-  hoverColor: '#000',
   shadow: false,
   disabled: false,
+  variant: 'primary',
 };

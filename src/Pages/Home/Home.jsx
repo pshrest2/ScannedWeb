@@ -25,7 +25,6 @@ const Home = () => {
   const handleCloseUploadImageModal = () => {
     dispatch(display(Modals.UploadImageModal), false);
     dispatch(clearImage());
-    hiddenFileInput.current.value = null;
   };
   const hasData = receiptData.items.length > 0;
 
