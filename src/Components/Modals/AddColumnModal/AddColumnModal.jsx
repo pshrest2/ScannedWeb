@@ -1,21 +1,23 @@
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
 import { Form, Modal } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import { v4 as uuidv4 } from 'uuid';
-import { updateColumn } from '../../../Actions/receipt';
 import CustomButton from '../../Common/CustomButton';
-import './ConfigureColumnModal.scss';
+import CreatableSelect from 'react-select/creatable';
+import { v4 as uuidv4 } from 'uuid';
+import { useDispatch, useSelector } from 'react-redux';
+import { update } from '../../../Actions/column';
+import { display } from '../../../Actions/modal';
+import { Modals } from '../../../Enums/Modals';
+import { updateColumn } from '../../../Actions/receipt';
 
-const ConfigureColumnModal = ({ show, handleClose }) => {
+const AddColumnModal = ({ show, handleClose }) => {
+  const [title, setTitle] = useState('');
+  const column = useSelector((state) => state.column);
   const data = useSelector((state) => state.receipt);
-  const { columnsData } = data;
   const dispatch = useDispatch();
 
-  const [columnConfiguration, setColumnConfiguration] = useState({
-    splitBetween: 0,
-    title: '',
-  });
+  const { people, selectedPeople } = column;
+  const { columnsData } = data;
 
   const handleCreateColumn = () => {
     handleClose();
@@ -26,8 +28,8 @@ const ConfigureColumnModal = ({ show, handleClose }) => {
         ...columnsData.columns,
         [id]: {
           id,
-          title: columnConfiguration.title,
-          splitBetween: +columnConfiguration.splitBetween,
+          title,
+          splitBetween: selectedPeople,
           itemIds: [],
         },
       },
@@ -36,24 +38,21 @@ const ConfigureColumnModal = ({ show, handleClose }) => {
     dispatch(updateColumn(newColumnsData));
   };
 
-  const handleColumnConfigurationChange = (name, e) => {
-    setColumnConfiguration({
-      ...columnConfiguration,
-      [name]: e.target.value,
-    });
+  const handleCreatePeople = (inputValue) => {
+    dispatch(update('name', inputValue));
+    dispatch(display(Modals.AddPersonModal, true));
   };
 
   return (
     <Modal
-      className="configure-column-modal"
+      className="add-column-modal"
       size="sm"
       show={show}
       onHide={handleClose}
     >
       <Modal.Header closeButton>
-        <Modal.Title>Configure Column</Modal.Title>
+        <Modal.Title>Add a new column</Modal.Title>
       </Modal.Header>
-
       <Modal.Body>
         <Form>
           <Form.Group className="mb-3">
@@ -61,27 +60,25 @@ const ConfigureColumnModal = ({ show, handleClose }) => {
             <Form.Control
               type="text"
               placeholder="Enter Column Title"
-              value={columnConfiguration.title}
-              onChange={(e) => {
-                handleColumnConfigurationChange('title', e);
-              }}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
             />
           </Form.Group>
 
           <Form.Group className="mb-3">
             <Form.Label>Split Between</Form.Label>
-            <Form.Control
-              type="number"
-              placeholder="Enter number of people to split items in this column"
-              value={columnConfiguration.splitBetween}
-              onChange={(e) => {
-                handleColumnConfigurationChange('splitBetween', e);
-              }}
+            <CreatableSelect
+              isMulti
+              onChange={(newValue) =>
+                dispatch(update('selectedPeople', newValue))
+              }
+              onCreateOption={handleCreatePeople}
+              options={people}
+              value={selectedPeople}
             />
           </Form.Group>
         </Form>
       </Modal.Body>
-
       <Modal.Footer>
         <CustomButton variant="secondary" onClick={handleClose}>
           Cancel
@@ -92,9 +89,9 @@ const ConfigureColumnModal = ({ show, handleClose }) => {
   );
 };
 
-export default ConfigureColumnModal;
+export default AddColumnModal;
 
-ConfigureColumnModal.propTypes = {
+AddColumnModal.propTypes = {
   show: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
 };

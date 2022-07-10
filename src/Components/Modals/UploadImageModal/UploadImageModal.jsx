@@ -36,7 +36,6 @@ const UploadImageModal = ({ show, handleClose }) => {
     setLoadingItems(false);
     handleClose();
   };
-  console.log(imageData);
   return (
     <Modal
       className="upload-image-modal"

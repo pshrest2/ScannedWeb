@@ -7,13 +7,7 @@ import './QRCodeModal.scss';
 
 const QRCodeModal = ({ show, handleClose }) => {
   return (
-    <Modal
-      className="qr-code-modal"
-      size="sm"
-      show={show}
-      onHide={handleClose}
-      closeButton
-    >
+    <Modal className="qr-code-modal" size="sm" show={show} onHide={handleClose}>
       <Modal.Header closeButton></Modal.Header>
       <Modal.Body>
         <div className="qr-code-preview-container">

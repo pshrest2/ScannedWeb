@@ -1,5 +1,6 @@
 export const Modals = {
-  ConfigureColumnModal: 'configureColumnModal',
   UploadImageModal: 'uploadImageModal',
   QRCodeModal: 'qrCodeModal',
+  AddColumnModal: 'addColumnModal',
+  AddPersonModal: 'addPersonModal',
 };

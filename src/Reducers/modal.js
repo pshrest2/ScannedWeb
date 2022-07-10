@@ -1,9 +1,10 @@
 import { Modals } from '../Enums/Modals';
 
 const initialState = {
-  [Modals.ConfigureColumnModal]: false,
   [Modals.UploadImageModal]: false,
   [Modals.QRCodeModal]: false,
+  [Modals.AddColumnModal]: false,
+  [Modals.AddPersonModal]: false,
 };
 
 const modal = (state = initialState, { type, payload }) => {

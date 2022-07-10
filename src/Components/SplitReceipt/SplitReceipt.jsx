@@ -87,7 +87,7 @@ const SplitReceipt = () => {
           Clear Receipt
         </CustomButton>
         <CustomButton
-          onClick={() => dispatch(display(Modals.ConfigureColumnModal, true))}
+          onClick={() => dispatch(display(Modals.AddColumnModal, true))}
           shadow
         >
           Add Column

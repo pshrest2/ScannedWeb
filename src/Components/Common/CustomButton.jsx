@@ -37,7 +37,7 @@ const StyledButton = styled.button`
 `;
 
 const CustomButton = (
-  { children, onClick, shadow, disabled, variant },
+  { children, onClick, shadow, disabled, variant, type },
   props
 ) => {
   return (
@@ -46,6 +46,7 @@ const CustomButton = (
       shadow={shadow}
       disabled={disabled}
       variant={variant}
+      type={type}
       {...props}
     >
       {children}
@@ -60,14 +61,17 @@ CustomButton.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]).isRequired,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
   shadow: PropTypes.bool,
   disabled: PropTypes.bool,
   variant: PropTypes.string,
+  type: PropTypes.string,
 };
 
 CustomButton.defaultProps = {
   shadow: false,
   disabled: false,
   variant: 'primary',
+  type: 'button',
+  onClick: () => {},
 };
