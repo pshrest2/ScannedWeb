@@ -5,9 +5,9 @@ import { display } from '../../Actions/modal';
 import { Modals } from '../../Enums/Modals';
 import CustomButton from '../Common/CustomButton';
 import PropTypes from 'prop-types';
+import { updateImageData } from '../../Actions/receipt';
 
 import './Main.scss';
-import { updateImageData } from '../../Actions/receipt';
 
 const Main = ({ hiddenFileInput }) => {
   const dispatch = useDispatch();

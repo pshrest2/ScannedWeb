@@ -1,19 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Droppable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Item from './Item';
-import { updateColumn, updateColumnTitle } from '../../Actions/receipt';
-import { FormControl } from 'react-bootstrap';
+import CreatableSelect from 'react-select/creatable';
+import {
+  addColumnPerson,
+  updateColumn,
+  updateColumnKey,
+} from '../../Actions/receipt';
+import { display } from '../../Actions/modal';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import { useSelector } from 'react-redux';
+import { Modals } from '../../Enums/Modals';
+
 const Container = styled.div`
   margin: 8px;
   border-radius: 13px;
   background-color: #f2effc;
   padding: 25px 15px;
   position: relative;
+  min-width: 250px;
+  max-width: 250px;
 `;
 const InnerContainer = styled.div`
   margin: 0px 5px;
@@ -36,12 +45,10 @@ const Span = styled.span`
 `;
 
 const Column = ({ column, items }) => {
-  const data = useSelector((state) => state.receipt);
   const dispatch = useDispatch();
-  const { columnsData } = data;
-  const handleTitleChange = (e) => {
-    dispatch(updateColumnTitle(column.id, e.target.value));
-  };
+  const data = useSelector((state) => state.receipt);
+
+  const { columnsData, people } = data;
 
   const getTotal = () => {
     let total = 0;
@@ -63,17 +70,25 @@ const Column = ({ column, items }) => {
     };
     dispatch(updateColumn(newColumnsData));
   };
+  const handleCreatePeople = (inputValue) => {
+    dispatch(addColumnPerson(inputValue, column.id));
+    dispatch(display(Modals.AddPersonModal, true));
+  };
   return (
     <Container>
       <Span onClick={handleDeleteColumn}>
         <AiFillCloseCircle />
       </Span>
 
-      <FormControl
-        type="text"
-        placeholder={"Enter column's title "}
-        onChange={handleTitleChange}
-        value={column.title}
+      <CreatableSelect
+        onChange={(newValue) =>
+          dispatch(updateColumnKey(column.id, 'splitBetween', newValue))
+        }
+        onCreateOption={handleCreatePeople}
+        options={people}
+        value={column.splitBetween}
+        placeholder="Split Between"
+        isMulti
       />
       <Droppable droppableId={column.id}>
         {(provided) => (
@@ -95,7 +110,7 @@ export default Column;
 Column.propTypes = {
   column: PropTypes.shape({
     id: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
+    splitBetween: PropTypes.arrayOf(PropTypes.shape({})),
   }).isRequired,
   items: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };

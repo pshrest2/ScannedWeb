@@ -25,8 +25,7 @@ const UploadImageModal = ({ show, handleClose }) => {
       columns: {
         [initialColumnId]: {
           id: initialColumnId,
-          title: 'All Items',
-          splitBetween: 1,
+          splitBetween: [],
           itemIds: receiptInfo.items.map((i) => i.id),
         },
       },

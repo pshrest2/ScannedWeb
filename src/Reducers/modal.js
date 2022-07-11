@@ -3,7 +3,6 @@ import { Modals } from '../Enums/Modals';
 const initialState = {
   [Modals.UploadImageModal]: false,
   [Modals.QRCodeModal]: false,
-  [Modals.AddColumnModal]: false,
   [Modals.AddPersonModal]: false,
 };
 

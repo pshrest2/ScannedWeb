@@ -4,8 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { clear, updateColumn } from '../../Actions/receipt';
 import { DragDropContext } from 'react-beautiful-dnd';
 import Column from '../Common/Column';
-import { display } from '../../Actions/modal';
-import { Modals } from '../../Enums/Modals';
+import { v4 as uuidv4 } from 'uuid';
 import CustomButton from '../Common/CustomButton';
 import './SplitReceipt.scss';
 
@@ -18,7 +17,24 @@ const SplitReceipt = () => {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.receipt);
   const { receiptData, columnsData } = data;
-  const hasData = receiptData.items.length > 0;
+
+  const handleCreateColumn = () => {
+    const id = uuidv4();
+    const newColumnsData = {
+      ...columnsData,
+      columns: {
+        ...columnsData.columns,
+        [id]: {
+          id,
+          splitBetween: [],
+          itemIds: [],
+        },
+      },
+      columnOrder: [...columnsData.columnOrder, id],
+    };
+    dispatch(updateColumn(newColumnsData));
+  };
+
   const handleOnDragEnd = (result) => {
     const { destination, source, draggableId } = result;
     if (!destination) return;
@@ -86,10 +102,7 @@ const SplitReceipt = () => {
         >
           Clear Receipt
         </CustomButton>
-        <CustomButton
-          onClick={() => dispatch(display(Modals.AddColumnModal, true))}
-          shadow
-        >
+        <CustomButton onClick={handleCreateColumn} shadow>
           Add Column
         </CustomButton>
       </Row>

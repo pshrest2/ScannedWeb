@@ -3,16 +3,16 @@ import { Form, Modal } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import CustomButton from '../../Common/CustomButton';
 import { useDispatch, useSelector } from 'react-redux';
-import { addPerson } from '../../../Actions/column';
+import { addPerson, updateColumnKey } from '../../../Actions/receipt';
 import './AddPersonModal.scss';
 
 const AddPersonModal = ({ show, handleClose }) => {
-  const column = useSelector((state) => state.column);
+  const data = useSelector((state) => state.receipt);
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const { name } = column;
+  const { personName, columnId } = data;
 
   const createOption = (label) => ({
     label,
@@ -22,13 +22,9 @@ const AddPersonModal = ({ show, handleClose }) => {
   const handleCreatePerson = (e) => {
     e.preventDefault();
     setIsLoading(true);
-    console.group('Person created with name: ', name);
-    console.log('Wait a moment...');
     setTimeout(() => {
-      const newPerson = createOption(name);
-      console.log(newPerson);
-      console.groupEnd();
-      dispatch(addPerson(newPerson));
+      const newPerson = createOption(personName);
+      dispatch(addPerson(newPerson, columnId));
     }, 1000);
     setIsLoading(false);
     handleClose();
@@ -43,7 +39,7 @@ const AddPersonModal = ({ show, handleClose }) => {
       backdrop="static"
     >
       <Modal.Header closeButton>
-        <Modal.Title>{`Enter an email address for ${name}`}</Modal.Title>
+        <Modal.Title>{`Enter an email address for ${personName}`}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form className="add-person-form" onSubmit={handleCreatePerson}>
