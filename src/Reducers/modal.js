@@ -4,6 +4,7 @@ const initialState = {
   [Modals.UploadImageModal]: false,
   [Modals.QRCodeModal]: false,
   [Modals.AddPersonModal]: false,
+  [Modals.CollectMoneyModal]: false,
 };
 
 const modal = (state = initialState, { type, payload }) => {

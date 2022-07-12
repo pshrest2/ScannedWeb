@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Droppable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
@@ -48,15 +48,27 @@ const Column = ({ column, items }) => {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.receipt);
 
-  const { columnsData, people } = data;
+  const {
+    columnsData,
+    people,
+    receiptData: { taxPercent },
+  } = data;
 
-  const getTotal = () => {
+  const round = (value) => Math.round(value * 100) / 100;
+
+  const total = useMemo(() => {
     let total = 0;
     items.forEach((item) => {
       total += item.price;
     });
-    return Math.round(total * 100) / 100;
-  };
+    return round(total);
+  }, [items]);
+
+  const tax = useMemo(() => {
+    return round(total * (taxPercent / 100));
+  }, [total, taxPercent]);
+
+  const subTotal = useMemo(() => tax + total, [tax, total]);
 
   const handleDeleteColumn = () => {
     const columnsCopy = { ...columnsData.columns };
@@ -97,7 +109,8 @@ const Column = ({ column, items }) => {
               <Item key={item.id} item={item} index={index} />
             ))}
             {provided.placeholder}
-            <InnerContainer>{`Total: $${getTotal()}`}</InnerContainer>
+            <InnerContainer>{`Tax(${taxPercent} %): $${tax}`}</InnerContainer>
+            <InnerContainer>{`Sub Total: $${subTotal}`}</InnerContainer>
           </ItemList>
         )}
       </Droppable>

@@ -12,13 +12,15 @@ import SplitReceipt from '../../Components/SplitReceipt/SplitReceipt';
 import QRCodeModal from '../../Components/Modals/QRCodeModal/QRCodeModal';
 import AddPersonModal from '../../Components/Modals/AddPersonModal/AddPersonModal';
 import './Home.scss';
+import CollectMoneyModal from '../../Components/Modals/CollectMoneyModal/CollectMoneyModal';
 
 const Home = () => {
   const data = useSelector((state) => state.receipt);
   const modal = useSelector((state) => state.modal);
   const dispatch = useDispatch();
   const hiddenFileInput = useRef(null);
-  const { uploadImageModal, qrCodeModal, addPersonModal } = modal;
+  const { uploadImageModal, qrCodeModal, addPersonModal, collectMoneyModal } =
+    modal;
   const { receiptData } = data;
   const [connection, setConnection] = useState(null);
 
@@ -50,7 +52,6 @@ const Home = () => {
         .catch(() => console.log('Connection failed'));
     }
   }, [connection, dispatch]);
-
   return (
     <BackgroundContainer className="home-container">
       {!hasData ? <Main hiddenFileInput={hiddenFileInput} /> : <SplitReceipt />}
@@ -71,6 +72,12 @@ const Home = () => {
         <AddPersonModal
           show={addPersonModal}
           handleClose={() => dispatch(display(Modals.AddPersonModal, false))}
+        />
+      )}
+      {collectMoneyModal && (
+        <CollectMoneyModal
+          show={collectMoneyModal}
+          handleClose={() => dispatch(display(Modals.CollectMoneyModal, false))}
         />
       )}
     </BackgroundContainer>

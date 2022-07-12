@@ -15,6 +15,12 @@ const dict = {
     hoverColor: '#000',
     hoverBackgroundColor: '#b1b1b1',
   },
+  success: {
+    color: '#000',
+    backgroundColor: '#90BE6D',
+    hoverColor: '#000',
+    hoverBackgroundColor: '#a1d679',
+  },
 };
 
 const StyledButton = styled.button`

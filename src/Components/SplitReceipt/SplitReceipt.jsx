@@ -7,6 +7,8 @@ import Column from '../Common/Column';
 import { v4 as uuidv4 } from 'uuid';
 import CustomButton from '../Common/CustomButton';
 import './SplitReceipt.scss';
+import { display } from '../../Actions/modal';
+import { Modals } from '../../Enums/Modals';
 
 const Row = styled.div`
   display: flex;
@@ -104,6 +106,13 @@ const SplitReceipt = () => {
         </CustomButton>
         <CustomButton onClick={handleCreateColumn} shadow>
           Add Column
+        </CustomButton>
+        <CustomButton
+          variant="success"
+          onClick={() => dispatch(display(Modals.CollectMoneyModal, true))}
+          shadow
+        >
+          Collect Money
         </CustomButton>
       </Row>
 
