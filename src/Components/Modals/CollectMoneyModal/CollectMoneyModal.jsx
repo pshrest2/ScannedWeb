@@ -43,6 +43,20 @@ const CollectMoneyModal = ({ show, handleClose }) => {
     return eachTotal;
   };
 
+  const handleRequestUser = ({ value, total }) => {
+    window.open(
+      `https://venmo.com/?txn=charge&audience=public&recipients=${value}&amount=${total}&note=From%20Splitify`,
+      '_blank'
+    );
+  };
+
+  const handleSendUser = ({ value, total }) => {
+    window.open(
+      `https://venmo.com/?txn=pay&audience=public&recipients=${value}&amount=${total}&note=From%20Splitify`,
+      '_blank'
+    );
+  };
+
   useEffect(() => {
     setPersonTotal(getTotalForEach());
   }, [people, columnsData, receiptData]);
@@ -77,12 +91,18 @@ const CollectMoneyModal = ({ show, handleClose }) => {
                     <td>{person.value}</td>
                     <td>{person.total}</td>
                     <td>
-                      <CustomButton variant="success" onClick={() => {}}>
+                      <CustomButton
+                        variant="success"
+                        onClick={() => handleRequestUser(person)}
+                        href=""
+                      >
                         Request
                       </CustomButton>
                     </td>
                     <td>
-                      <CustomButton onClick={() => {}}>Send</CustomButton>
+                      <CustomButton onClick={() => handleSendUser(person)}>
+                        Send
+                      </CustomButton>
                     </td>
                   </tr>
                 ))}
