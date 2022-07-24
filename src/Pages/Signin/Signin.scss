@@ -1,0 +1,50 @@
+.login-container {
+  .login-inner-container {
+    margin: auto;
+    max-width: 400px;
+    max-height: 550px;
+    text-align: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    .login-header-container {
+      display: flex;
+      flex-direction: column;
+      .login-header {
+        font-weight: bold;
+        font-size: 45px;
+      }
+
+      .login-sub-header {
+        margin-top: 10px;
+      }
+    }
+
+    .login-body-container {
+      margin: 50px auto;
+      height: 40%;
+
+      form {
+        .form-control {
+          height: 45px;
+          border-radius: 10px;
+        }
+        .invalid-feedback {
+          text-align: left;
+        }
+        .checkbox-field {
+          text-align: left;
+          .forgot-password-link {
+            text-align: right;
+          }
+        }
+
+        .login-button {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

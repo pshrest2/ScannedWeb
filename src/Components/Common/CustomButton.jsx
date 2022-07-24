@@ -42,10 +42,15 @@ const StyledButton = styled.button`
   }
 `;
 
-const CustomButton = (
-  { children, onClick, shadow, disabled, variant, type },
-  props
-) => {
+const CustomButton = ({
+  children,
+  onClick,
+  shadow,
+  disabled,
+  variant,
+  type,
+  ...props
+}) => {
   return (
     <StyledButton
       onClick={onClick}
