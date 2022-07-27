@@ -19,7 +19,13 @@ const useApiAccess = () => {
     if (response.status === 200) return response.data;
     return {};
   };
-  return { fetchReceiptData, fetchReceiptDataUrl };
+
+  const login = async (dto) => {
+    const response = await post.post('api/users/login', dto);
+    if (response.status === 200) return response.data;
+    return null;
+  };
+  return { fetchReceiptData, fetchReceiptDataUrl, login };
 };
 
 export default useApiAccess;

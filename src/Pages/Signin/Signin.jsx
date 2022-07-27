@@ -3,18 +3,36 @@ import PropTyes from 'prop-types';
 import BackgroundContainer from '../../Components/Common/BackgroundContainer';
 import CustomButton from '../../Components/Common/CustomButton';
 import { Col, Form, Row } from 'react-bootstrap';
+
 import './Signin.scss';
+import useApiAccess from '../../Hooks/Api/useApiAccess';
 
 const Signin = () => {
   const [validated, setValidated] = useState(false);
+  const [loginDto, setLoginDto] = useState({
+    email: '',
+    password: '',
+  });
+  const { login } = useApiAccess();
 
-  const handleFormSubmit = (event) => {
+  const handleFieldChange = (name) => (e) => {
+    setLoginDto({
+      ...loginDto,
+      [name]: e.target.value,
+    });
+  };
+
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.stopPropagation();
+    } else {
+      // make api call to login
+      console.log('logged in');
+      const token = await login(loginDto);
+      console.log(token);
     }
-
     setValidated(true);
   };
 
@@ -31,14 +49,26 @@ const Signin = () => {
         <div className="login-body-container">
           <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Control type="email" placeholder="Enter email" required />
+              <Form.Control
+                type="email"
+                placeholder="Enter email"
+                value={loginDto.email}
+                onChange={handleFieldChange('email')}
+                required
+              />
               <Form.Control.Feedback type="invalid">
                 Email is required
               </Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Control type="password" placeholder="Password" required />
+              <Form.Control
+                type="password"
+                placeholder="Password"
+                value={loginDto.password}
+                onChange={handleFieldChange('password')}
+                required
+              />
               <Form.Control.Feedback type="invalid">
                 Password is required
               </Form.Control.Feedback>
