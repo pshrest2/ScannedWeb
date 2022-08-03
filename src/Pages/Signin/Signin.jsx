@@ -25,16 +25,14 @@ const Signin = () => {
     });
   };
 
-  const handleFormSubmit = (event) => {
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.stopPropagation();
     } else {
-      // make api call to login
-      signin(loginDto).then((token) => {
-        dispatch(login(token));
-      });
+      var userToken = await signin(loginDto);
+      if (userToken) dispatch(login(userToken));
     }
     setValidated(true);
   };
