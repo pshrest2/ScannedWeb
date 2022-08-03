@@ -20,13 +20,8 @@ const useApiAccess = () => {
     return {};
   };
 
-  const login = async (dto) => {
-    const response = await post.post('api/auth/login', dto);
-    if (response.status !== 200) return null;
+  const login = async (dto) => await post.post('api/auth/login', dto);
 
-    localStorage.setItem('user', JSON.stringify(response.data));
-    return response.data;
-  };
   return { fetchReceiptData, fetchReceiptDataUrl, login };
 };
 

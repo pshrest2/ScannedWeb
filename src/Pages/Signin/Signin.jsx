@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import PropTyes from 'prop-types';
 import BackgroundContainer from '../../Components/Common/BackgroundContainer';
 import CustomButton from '../../Components/Common/CustomButton';
-import { Col, Form, Row } from 'react-bootstrap';
-
+import { Col, Form, Row, Alert } from 'react-bootstrap';
 import './Signin.scss';
 import useApiAccess from '../../Hooks/Api/useApiAccess';
 import { useDispatch } from 'react-redux';
 import { login } from '../../Actions/auth';
+import { useEffect } from 'react';
 
 const Signin = () => {
   const [validated, setValidated] = useState(false);
+  const [error, setError] = useState('');
   const [loginDto, setLoginDto] = useState({
     email: '',
     password: '',
@@ -28,15 +28,24 @@ const Signin = () => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.stopPropagation();
-    } else {
-      var userToken = await signin(loginDto);
-      if (userToken) dispatch(login(userToken));
-    }
-    setValidated(true);
-  };
+    if (form.checkValidity() === false) return;
 
+    try {
+      const response = await signin(loginDto);
+      if (response.status !== 200) return;
+      dispatch(login(response.data));
+      setValidated(true);
+    } catch (error) {
+      setError(error.response.data);
+      setValidated(false);
+    }
+  };
+  useEffect(() => {
+    if (!error) return;
+    setTimeout(() => {
+      setError('');
+    }, 3000);
+  }, [error]);
   return (
     <BackgroundContainer className="login-container">
       <div className="login-inner-container">
@@ -48,6 +57,7 @@ const Signin = () => {
         </div>
 
         <div className="login-body-container">
+          {error && <Alert variant="danger">{error}</Alert>}
           <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Control
