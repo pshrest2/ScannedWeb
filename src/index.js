@@ -1,16 +1,19 @@
-/* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import allReducers from './Reducers';
+import { BrowserRouter } from 'react-router-dom';
+import { configureStore } from '@reduxjs/toolkit';
+import { Provider } from 'react-redux';
+import { authMiddleware } from './Middlewares/middlewares';
 
 import './index.css';
 
-const store = createStore(allReducers);
+const store = configureStore({
+  reducer: allReducers,
+  middleware: [authMiddleware],
+});
 
 ReactDOM.render(
   <Provider store={store}>

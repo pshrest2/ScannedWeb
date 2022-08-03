@@ -21,7 +21,7 @@ const useApiAccess = () => {
   };
 
   const login = async (dto) => {
-    const response = await post.post('api/users/login', dto);
+    const response = await post.post('api/auth/login', dto);
     if (response.status === 200) return response.data;
     return null;
   };

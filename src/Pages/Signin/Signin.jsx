@@ -6,6 +6,8 @@ import { Col, Form, Row } from 'react-bootstrap';
 
 import './Signin.scss';
 import useApiAccess from '../../Hooks/Api/useApiAccess';
+import { useDispatch } from 'react-redux';
+import { login } from '../../Actions/auth';
 
 const Signin = () => {
   const [validated, setValidated] = useState(false);
@@ -13,7 +15,8 @@ const Signin = () => {
     email: '',
     password: '',
   });
-  const { login } = useApiAccess();
+  const dispatch = useDispatch();
+  const { login: signin } = useApiAccess();
 
   const handleFieldChange = (name) => (e) => {
     setLoginDto({
@@ -22,16 +25,16 @@ const Signin = () => {
     });
   };
 
-  const handleFormSubmit = async (event) => {
+  const handleFormSubmit = (event) => {
     event.preventDefault();
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.stopPropagation();
     } else {
       // make api call to login
-      console.log('logged in');
-      const token = await login(loginDto);
-      console.log(token);
+      signin(loginDto).then((token) => {
+        dispatch(login(token));
+      });
     }
     setValidated(true);
   };
