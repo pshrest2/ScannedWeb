@@ -10,8 +10,7 @@ const useApiAccess = () => {
       'api/form-recognizer/upload/file',
       formData
     );
-    if (response.status === 200) return response.data;
-    return {};
+    return response;
   };
 
   const fetchReceiptDataUrl = async (url) => {

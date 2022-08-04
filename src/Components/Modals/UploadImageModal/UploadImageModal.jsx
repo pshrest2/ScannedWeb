@@ -17,21 +17,28 @@ const UploadImageModal = ({ show, handleClose }) => {
   const [loadingItems, setLoadingItems] = useState(false);
   const handleSubmit = async () => {
     setLoadingItems(true);
-    const receiptInfo = imageData.fromUrl
-      ? await fetchReceiptDataUrl(imageData.imageSrc)
-      : await fetchReceiptData(imageData.imageFile);
-    const initialColumnId = uuidv4();
-    const columnsInfo = {
-      columns: {
-        [initialColumnId]: {
-          id: initialColumnId,
-          splitBetween: [],
-          itemIds: receiptInfo.items.map((i) => i.id),
-        },
-      },
-      columnOrder: [initialColumnId],
-    };
-    dispatch(initialize(receiptInfo, columnsInfo));
+    try {
+      const response = imageData.fromUrl
+        ? await fetchReceiptDataUrl(imageData.imageSrc)
+        : await fetchReceiptData(imageData.imageFile);
+      if (response.status === 200) {
+        const receiptInfo = response.data;
+        const initialColumnId = uuidv4();
+        const columnsInfo = {
+          columns: {
+            [initialColumnId]: {
+              id: initialColumnId,
+              splitBetween: [],
+              itemIds: receiptInfo.items.map((i) => i.id),
+            },
+          },
+          columnOrder: [initialColumnId],
+        };
+        dispatch(initialize(receiptInfo, columnsInfo));
+      }
+    } catch (error) {
+      console.log(error.response.data);
+    }
     setLoadingItems(false);
     handleClose();
   };
