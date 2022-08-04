@@ -1,10 +1,14 @@
 import React from 'react';
 import { Container, Nav, Navbar } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import { logout } from '../../Actions/auth';
 
 const ScannlyNav = () => {
-  const user = useSelector((state) => state.auth);
-  const { isLoggedIn } = user;
+  const auth = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const { isLoggedIn, user } = auth;
+
   return (
     <Navbar bg="light" expand="lg">
       <Container>
@@ -14,11 +18,12 @@ const ScannlyNav = () => {
 
         <Navbar.Collapse className="justify-content-end">
           {isLoggedIn ? (
-            <Navbar.Text>
-              Signed in as: <a href="#">Pranaya Shrestha</a>
-            </Navbar.Text>
+            <>
+              <Navbar.Text>{user.displayName}</Navbar.Text>
+              <Nav.Link onClick={() => dispatch(logout())}>Logout</Nav.Link>
+            </>
           ) : (
-            <Nav.Link href="/signin">SignIn</Nav.Link>
+            <Nav.Link href="/signin">Login</Nav.Link>
           )}
         </Navbar.Collapse>
       </Container>

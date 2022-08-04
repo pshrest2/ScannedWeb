@@ -1,4 +1,5 @@
 import axios from 'axios';
+import authHeader from '../Helpers/authHeader';
 import getBaseUrl from '../Helpers/getBaseUrl';
 
 const useAxios = () => {
@@ -7,6 +8,7 @@ const useAxios = () => {
     baseURL: getBaseUrl(),
     headers: {
       'Content-Type': 'multipart/form-data',
+      ...authHeader(),
     },
   });
 
@@ -15,6 +17,7 @@ const useAxios = () => {
     baseURL: getBaseUrl(),
     headers: {
       'Content-Type': 'application/json',
+      ...authHeader(),
     },
   });
 
