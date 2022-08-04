@@ -1,15 +1,25 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Home from './Pages/Home/Home';
+import Signin from './Pages/Signin';
+import Unauthorized from './Pages/Unauthorized';
+import NotFound from './Pages/NotFound';
+
 import './App.scss';
-import Signin from './Pages/Signin/Signin';
+import ScannlyNav from './Components/ScannlyNav/ScannlyNav';
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/login" element={<Signin />} />
-    </Routes>
+    <div className="app">
+      <ScannlyNav />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/signin" element={<Signin />} />
+
+        <Route path="/unauthorized" element={<Unauthorized />} />
+        <Route path="/notfound" element={<NotFound />} />
+      </Routes>
+    </div>
   );
 }
 

@@ -1,5 +1,6 @@
 const initialState = {
   token: '',
+  isLoggedIn: false,
 };
 
 const auth = (state = initialState, { type, payload }) => {
@@ -8,6 +9,7 @@ const auth = (state = initialState, { type, payload }) => {
       return {
         ...state,
         token: payload.token,
+        isLoggedIn: true,
       };
 
     default:

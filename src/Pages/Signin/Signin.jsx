@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import BackgroundContainer from '../../Components/Common/BackgroundContainer';
 import CustomButton from '../../Components/Common/CustomButton';
 import { Col, Form, Row, Alert } from 'react-bootstrap';
-import './Signin.scss';
 import useApiAccess from '../../Hooks/Api/useApiAccess';
 import { useDispatch } from 'react-redux';
 import { login } from '../../Actions/auth';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './Signin.scss';
 
 const Signin = () => {
   const [validated, setValidated] = useState(false);
@@ -17,6 +18,7 @@ const Signin = () => {
   });
   const dispatch = useDispatch();
   const { login: signin } = useApiAccess();
+  const navigate = useNavigate();
 
   const handleFieldChange = (name) => (e) => {
     setLoginDto({
@@ -35,6 +37,7 @@ const Signin = () => {
       if (response.status !== 200) return;
       dispatch(login(response.data));
       setValidated(true);
+      navigate('/');
     } catch (error) {
       setError(error.response.data);
       setValidated(false);
