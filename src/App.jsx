@@ -7,6 +7,7 @@ import NotFound from './Pages/NotFound';
 
 import './App.scss';
 import ScannlyNav from './Components/ScannlyNav/ScannlyNav';
+import Register from './Pages/Register/Register';
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/signin" element={<Signin />} />
-
+        <Route path="/register" element={<Register />} />
         <Route path="/unauthorized" element={<Unauthorized />} />
         <Route path="/notfound" element={<NotFound />} />
       </Routes>

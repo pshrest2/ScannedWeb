@@ -23,7 +23,10 @@ const ScannlyNav = () => {
               <Nav.Link onClick={() => dispatch(logout())}>Logout</Nav.Link>
             </>
           ) : (
-            <Nav.Link href="/signin">Login</Nav.Link>
+            <>
+              <Nav.Link href="/signin">Login</Nav.Link>
+              <Nav.Link href="/register">Register</Nav.Link>
+            </>
           )}
         </Navbar.Collapse>
       </Container>

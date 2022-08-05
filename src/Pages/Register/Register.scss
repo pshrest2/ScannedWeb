@@ -1,0 +1,43 @@
+.register-container {
+  .register-inner-container {
+    margin: auto;
+    max-width: 400px;
+    max-height: 650px;
+    text-align: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    .register-header-container {
+      display: flex;
+      flex-direction: column;
+      .register-header {
+        font-weight: bold;
+        font-size: 40px;
+      }
+
+      .register-sub-header {
+        margin-top: 10px;
+      }
+    }
+
+    .register-body-container {
+      margin: 50px auto;
+      height: 40%;
+      text-align: left;
+      form {
+        .form-control {
+          height: 45px;
+          border-radius: 10px;
+        }
+        .invalid-feedback {
+          text-align: left;
+        }
+        .register-button {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
