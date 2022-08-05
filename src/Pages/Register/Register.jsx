@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Alert, Form } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import BackgroundContainer from '../../Components/Common/BackgroundContainer';
 import CustomButton from '../../Components/Common/CustomButton';
 
@@ -95,13 +96,16 @@ const Register = () => {
               </Form.Control.Feedback>
             </Form.Group>
             <CustomButton
-              className="register-button"
+              className="mb-2 register-button"
               variant="success"
               type="submit"
               shadow
             >
               Register
             </CustomButton>
+            <Form.Label className="mb-2">
+              Already have an account? <Link to="/signin">Login</Link>
+            </Form.Label>
           </Form>
         </div>
       </div>
