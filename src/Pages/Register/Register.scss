@@ -31,6 +31,13 @@
           height: 45px;
           border-radius: 10px;
         }
+        .form-label {
+          label {
+            font-weight: bold;
+          }
+          display: flex;
+          justify-content: space-between;
+        }
         .invalid-feedback {
           text-align: left;
         }
@@ -40,4 +47,24 @@
       }
     }
   }
+}
+
+.valid input[type='email'],
+.valid input[type='text'],
+.valid input[type='number'] {
+  border-color: green;
+}
+
+.valid .feedback {
+  color: green;
+}
+
+.invalid input[type='email'],
+.invalid input[type='text'],
+.invalid input[type='number'] {
+  border-color: red;
+}
+
+.invalid .feedback {
+  color: red;
 }
