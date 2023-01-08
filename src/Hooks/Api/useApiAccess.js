@@ -7,19 +7,19 @@ const useApiAccess = () => {
     formData.append('file', imageData);
 
     const response = await postForm.post(
-      'api/form-recognizer/upload/file',
+      'form-recognizer/upload/file',
       formData
     );
     return response;
   };
 
   const fetchReceiptDataUrl = async (url) => {
-    const response = await post.post('api/form-recognizer/upload/url', url);
+    const response = await post.post('form-recognizer/upload/url', url);
     if (response.status === 200) return response.data;
     return {};
   };
 
-  const login = async (dto) => await post.post('api/auth/login', dto);
+  const login = async (dto) => await post.post('auth/login', dto);
 
   return { fetchReceiptData, fetchReceiptDataUrl, login };
 };
