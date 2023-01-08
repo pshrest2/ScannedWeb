@@ -8,7 +8,7 @@
   "plugins": ["prettier", "react", "react-hooks", "@typescript-eslint"],
   "rules": {
     "eqeqeq": "error",
-    "no-console": "warn",
+    "no-console": "off",
     "prettier/prettier": "error",
     "react/display-name": "off",
     "react/no-children-prop": "off",
@@ -17,7 +17,7 @@
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "no-empty-function": "off",
-    "@typescript-eslint/no-empty-function": ["warn"]
+    "@typescript-eslint/no-empty-function": "off"
   },
   "parserOptions": {
     "ecmaVersion": "latest",

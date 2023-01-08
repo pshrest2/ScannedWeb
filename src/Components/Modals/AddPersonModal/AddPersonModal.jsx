@@ -3,7 +3,7 @@ import { Form, Modal } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import CustomButton from '../../Common/CustomButton';
 import { useDispatch, useSelector } from 'react-redux';
-import { addPerson, updateColumnKey } from '../../../Actions/receipt';
+import { addPerson } from '../../../Actions/receipt';
 import './AddPersonModal.scss';
 
 const AddPersonModal = ({ show, handleClose }) => {

@@ -1,4 +1,4 @@
-const authMiddleware = (store) => (next) => (action) => {
+const authMiddleware = () => (next) => (action) => {
   console.log(action);
   next(action);
 };

@@ -49,7 +49,9 @@ const Home = () => {
             dispatch(display(Modals.UploadImageModal, true));
           });
         })
-        .catch(() => console.log('Connection failed'));
+        .catch((error) => {
+          console.log(error);
+        });
     }
   }, [connection, dispatch]);
   return (

@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { Droppable } from 'react-beautiful-dnd';
 import styled from 'styled-components';

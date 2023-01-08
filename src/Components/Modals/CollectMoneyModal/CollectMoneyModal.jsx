@@ -18,31 +18,6 @@ const CollectMoneyModal = ({ show, handleClose }) => {
     return Math.round((total / totalPeople) * 100) / 100;
   };
 
-  const getTotalForEach = () => {
-    let eachTotal = [];
-
-    people.forEach((person) => {
-      let total = 0;
-      Object.values(columnsData.columns).forEach((column) => {
-        let items = [];
-        if (column.splitBetween.some((p) => p.value === person.value)) {
-          column.itemIds.forEach((itemId) => {
-            const item = receiptData.items.find((i) => i.id === itemId);
-            items.push(item);
-          });
-          total += getTotal(items, column.splitBetween.length);
-        }
-      });
-      if (total > 0)
-        eachTotal.push({
-          label: person.label,
-          value: person.value,
-          total,
-        });
-    });
-    return eachTotal;
-  };
-
   const handleRequestUser = ({ value, total }) => {
     window.open(
       `https://venmo.com/?txn=charge&audience=public&recipients=${value}&amount=${total}&note=From%20Splitify`,
@@ -58,6 +33,31 @@ const CollectMoneyModal = ({ show, handleClose }) => {
   };
 
   useEffect(() => {
+    const getTotalForEach = () => {
+      let eachTotal = [];
+
+      people.forEach((person) => {
+        let total = 0;
+        Object.values(columnsData.columns).forEach((column) => {
+          let items = [];
+          if (column.splitBetween.some((p) => p.value === person.value)) {
+            column.itemIds.forEach((itemId) => {
+              const item = receiptData.items.find((i) => i.id === itemId);
+              items.push(item);
+            });
+            total += getTotal(items, column.splitBetween.length);
+          }
+        });
+        if (total > 0)
+          eachTotal.push({
+            label: person.label,
+            value: person.value,
+            total,
+          });
+      });
+      return eachTotal;
+    };
+
     setPersonTotal(getTotalForEach());
   }, [people, columnsData, receiptData]);
 

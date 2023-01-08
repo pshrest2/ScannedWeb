@@ -55,5 +55,8 @@
     "eslint-plugin-react-hooks": "^4.4.0",
     "prettier": "^2.6.2",
     "sass": "^1.50.0"
+  },
+  "overrides": {
+    "autoprefixer": "10.4.5"
   }
 }
