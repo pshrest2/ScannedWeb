@@ -20,14 +20,14 @@ const CollectMoneyModal = ({ show, handleClose }) => {
 
   const handleRequestUser = ({ value, total }) => {
     window.open(
-      `https://venmo.com/?txn=charge&audience=public&recipients=${value}&amount=${total}&note=From%20Splitify`,
+      `https://venmo.com/?txn=charge&audience=public&recipients=${value}&amount=${total}&note=From%Scannly`,
       '_blank'
     );
   };
 
   const handleSendUser = ({ value, total }) => {
     window.open(
-      `https://venmo.com/?txn=pay&audience=public&recipients=${value}&amount=${total}&note=From%20Splitify`,
+      `https://venmo.com/?txn=pay&audience=public&recipients=${value}&amount=${total}&note=From%Scannly`,
       '_blank'
     );
   };
