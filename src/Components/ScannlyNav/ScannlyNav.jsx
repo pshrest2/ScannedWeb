@@ -1,13 +1,9 @@
 import React from 'react';
 import { Container, Nav, Navbar } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
-import { logout } from '../../Actions/auth';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const ScannlyNav = () => {
-  const auth = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
-  const { isLoggedIn, user } = auth;
+  const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
 
   return (
     <Navbar bg="light" expand="lg">
@@ -15,17 +11,19 @@ const ScannlyNav = () => {
         <Navbar.Brand href="/">Scannly</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse className="justify-content-end">
-          {isLoggedIn ? (
-            <Nav className="">
-              <Navbar.Text>{user.displayName}</Navbar.Text>
-              <Nav.Link onClick={() => dispatch(logout())}>Logout</Nav.Link>
-            </Nav>
-          ) : (
-            <Nav className="">
-              <Nav.Link href="/signin">Login</Nav.Link>
-              <Nav.Link href="/register">Register</Nav.Link>
-            </Nav>
-          )}
+          <Nav>
+            {isAuthenticated ? (
+              <>
+                <Nav.Link
+                  onClick={() => logout({ returnTo: window.location.origin })}
+                >
+                  Logout
+                </Nav.Link>
+              </>
+            ) : (
+              <Nav.Link onClick={loginWithRedirect}>Login</Nav.Link>
+            )}
+          </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
