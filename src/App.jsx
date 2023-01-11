@@ -11,7 +11,7 @@ import BackgroundContainer from './Components/Common/BackgroundContainer';
 function App() {
   const { isLoading } = useAuth0();
 
-  if (!isLoading) return <Loading />;
+  if (isLoading) return <Loading />;
   return (
     <BackgroundContainer className="app">
       <Routes>
