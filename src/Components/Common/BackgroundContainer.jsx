@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import img from '../../images//background.png';
+import ScannlyNav from '../ScannlyNav';
+
 const StyledContainer = styled.div`
   background-image: url(${img});
   background-position: center center;
@@ -14,7 +16,10 @@ const StyledContainer = styled.div`
 `;
 
 const BackgroundContainer = ({ children, className }) => (
-  <StyledContainer className={className}>{children}</StyledContainer>
+  <StyledContainer className={className}>
+    <ScannlyNav />
+    {children}
+  </StyledContainer>
 );
 
 export default BackgroundContainer;
