@@ -11,7 +11,7 @@ const QRCodeModal = ({ show, handleClose }) => {
       <Modal.Header closeButton></Modal.Header>
       <Modal.Body>
         <div className="qr-code-preview-container">
-          <QRCode value="https://receiptuploader.z13.web.core.windows.net/" />
+          <QRCode value="https://yellow-coast-0f148f110.2.azurestaticapps.net/" />
         </div>
       </Modal.Body>
       <Modal.Footer>Scan this QR Code in your phone</Modal.Footer>
